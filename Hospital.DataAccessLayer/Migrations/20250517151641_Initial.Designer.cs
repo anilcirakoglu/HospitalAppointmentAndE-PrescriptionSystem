@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hospital.DataAccessLayer.Migrations
 {
     [DbContext(typeof(HospitalContext))]
-    [Migration("20250516214221_Initial")]
+    [Migration("20250517151641_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -288,6 +288,10 @@ namespace Hospital.DataAccessLayer.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
