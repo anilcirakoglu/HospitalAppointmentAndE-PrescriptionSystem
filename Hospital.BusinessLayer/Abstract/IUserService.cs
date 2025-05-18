@@ -14,7 +14,7 @@ namespace Hospital.BusinessLayer.Abstract
         Task DeleteAsync(User user);
         Task<User> GetByIdentityNumberAsync(string identityNumber);
         Task<List<User>> GetAllAsync();
-        Task<User> GetByIdAsync(int id);
+        Task<User> GetByIdAsync(Guid id);
 
     }
 }

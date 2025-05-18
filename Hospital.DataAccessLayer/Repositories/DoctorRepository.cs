@@ -35,28 +35,21 @@ namespace Hospital.DataAccessLayer.Repositories
             return await _context.Doctors.ToListAsync();
         }
 
-        public async Task<List<DoctorDto>> GetAllInfo()
+        public async Task<List<Doctor>> GetAllInfo()
         {
             var doctors = await _context.Doctors
-                .Include(d => d.User) 
-                .Select(d => new DoctorDto
-                {
-                    Fullname = d.User.FullName,
-                    Qualification = d.Qualification,
-                    Specialty = d.Specialty,
-                    Description = d.Description,
-                    Email = d.User.Email,
-                    PhoneNumber = d.User.PhoneNumber,
-                    RoomNumber = d.RoomNumber
-                })
+                .Include(d => d.User)
                 .ToListAsync();
 
             return doctors;
         }
 
-        public async Task<Doctor> GetByIdAsync(int id)
+        public async Task<Doctor?> GetByIdAsync(Guid id)
         {
-            return await _context.Doctors.FindAsync(id);
+            var doctor = await _context.Doctors
+               .Include(d => d.User)
+               .FirstOrDefaultAsync(x => x.UserId == id); 
+            return doctor;
         }
 
         public async Task UpdateAsync(Doctor doctor)

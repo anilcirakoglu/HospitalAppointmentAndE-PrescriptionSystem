@@ -31,7 +31,7 @@ namespace Hospital.BusinessLayer.Concrete
             return await _userRepository.GetAllAsync();
         }
 
-        public async Task<User> GetByIdAsync(int id)
+        public async Task<User> GetByIdAsync(Guid id)
         {
             return await _userRepository.GetByIdAsync(id);
         }
