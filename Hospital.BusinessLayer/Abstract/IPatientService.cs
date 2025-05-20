@@ -1,4 +1,6 @@
-﻿using Hospital.EntityLayer.Enitities;
+﻿using Hospital.DtoLayer.DoctorDto;
+using Hospital.DtoLayer.PatientDto;
+using Hospital.EntityLayer.Enitities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +14,9 @@ namespace Hospital.BusinessLayer.Abstract
         Task AddAsync(Patient patient);
         Task UpdateAsync(Patient patient);
         Task DeleteAsync(Patient patient);
-        Task<List<Patient>> GetAllAsync();
-        Task<Patient> GetByIdAsync(int id);
+        Task<List<CreatePatientDto>> GetAllAsync();
+        Task<PatientDto> GetByIdAsync(Guid id);
+        Task<CreatePatientDto> CreateAsync(CreatePatientDto createDoctorDto);
+        Task<UpdatePatientDto> UpdatePatientAsync(Guid patientId, UpdatePatientDto updatePatientDto);
     }
 }

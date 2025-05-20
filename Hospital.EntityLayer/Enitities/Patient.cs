@@ -10,7 +10,6 @@ namespace Hospital.EntityLayer.Enitities
     {
         public Guid Id { get; set; }
         public Guid MedicalReportId { get; set; }
-        public MedicalReport MedicalReport { get; set; }
         public Guid UserId { get; set; }
         public User User { get; set; }
 
@@ -19,5 +18,6 @@ namespace Hospital.EntityLayer.Enitities
         public string Address { get; set; }
         public string InsuranceNumber { get; set; }
         public ICollection<Appointment> Appointment{ get; set; }
+        public ICollection<MedicalReport> MedicalReports { get; set; }
     }
 }

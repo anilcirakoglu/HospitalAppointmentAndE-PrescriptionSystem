@@ -32,12 +32,18 @@ namespace Hospital.DataAccessLayer.Repositories
 
         public async Task<List<Patient>> GetAllAsync()
         {
-            return await _context.Patients.ToListAsync();
+            var patients = await _context.Patients
+                .Include(x=>x.User)
+                .ToListAsync();
+            return patients;
         }
 
-        public async Task<Patient> GetByIdAsync(int id)
+        public async Task<Patient> GetByIdAsync(Guid id)
         {
-            return await _context.Patients.FindAsync(id);
+            var patient = await _context.Patients
+                .Include(x=>x.User)
+                .FirstOrDefaultAsync(x=>x.UserId==id);
+            return patient;
         }
 
         public async Task UpdateAsync(Patient patient)

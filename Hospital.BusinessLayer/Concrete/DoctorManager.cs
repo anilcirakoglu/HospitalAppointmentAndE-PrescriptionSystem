@@ -118,19 +118,19 @@ namespace Hospital.BusinessLayer.Concrete
         public async Task<DoctorDto?> GetByIdAsync(Guid id)
         {
             var doctor = await _doctorRepository.GetByIdAsync(id);
-
-            var doctorDto = new DoctorDto
-            {
-                Fullname = doctor.User.FullName,
-                Qualification = doctor.Qualification,
-                Specialty = doctor.Specialty,
-                Description = doctor.Description,
-                Email = doctor.User.Email,
-                PhoneNumber = doctor.User.PhoneNumber,
-                RoomNumber = doctor.RoomNumber
-            };
-            return doctorDto;
-
+        
+                var doctorDto = new DoctorDto
+                {
+                    Fullname = doctor.User.FullName,
+                    Qualification = doctor.Qualification,
+                    Specialty = doctor.Specialty,
+                    Description = doctor.Description,
+                    Email = doctor.User.Email,
+                    PhoneNumber = doctor.User.PhoneNumber,
+                    RoomNumber = doctor.RoomNumber
+                };
+                return doctorDto;
+           
         }
 
         public async Task UpdateAsync(Doctor doctor)

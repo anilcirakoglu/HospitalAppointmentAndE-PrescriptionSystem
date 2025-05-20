@@ -9,7 +9,7 @@ namespace Hospital.DataAccessLayer.Abstract
 {
     public interface IPatientRepository
     {
-        Task<Patient> GetByIdAsync(int id);
+        Task<Patient> GetByIdAsync(Guid id);
         Task<List<Patient>> GetAllAsync();
         Task AddAsync(Patient patient);
         Task UpdateAsync(Patient patient);
