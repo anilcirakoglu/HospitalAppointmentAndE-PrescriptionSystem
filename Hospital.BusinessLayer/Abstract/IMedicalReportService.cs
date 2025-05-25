@@ -1,4 +1,5 @@
-﻿using Hospital.EntityLayer.Enitities;
+﻿using Hospital.DtoLayer.MedicalReportDto;
+using Hospital.EntityLayer.Enitities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,9 @@ namespace Hospital.BusinessLayer.Abstract
         Task UpdateAsync(MedicalReport medicalReport);
         Task DeleteAsync(MedicalReport medicalReport);
         Task<List<MedicalReport>> GetAllAsync();
-        Task<MedicalReport> GetByIdAsync(int id);
+        Task<MedicalReport> GetByIdAsync(Guid id);
+        Task<CreateMedicalReportDto> CreateMedicalReportAsync(CreateMedicalReportDto createMedicalReportDto);
+        Task<List<GetMedicalReportDto>> GetMedicalReportAsync();
+
     }
 }

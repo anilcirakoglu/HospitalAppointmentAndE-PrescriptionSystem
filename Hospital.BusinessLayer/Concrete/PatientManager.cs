@@ -65,19 +65,19 @@ namespace Hospital.BusinessLayer.Concrete
            await _patientRepository.DeleteAsync(patient);
         }
 
-        public async Task<List<CreatePatientDto>> GetAllAsync()
+        public async Task<List<PatientDto>> GetAllAsync()
         {
             var patient=await _patientRepository.GetAllAsync();
-            return patient.Select(x => new CreatePatientDto
+            return patient.Select(x => new PatientDto
             {
-                InsuranceNumber = x.User.IdentityNumber,
+                IdentityNumber = x.User.IdentityNumber,
                FullName=x.User.FullName,
                Email = x.User.Email,
                PhoneNumber = x.User.PhoneNumber,
                DateOfBirth =x.DateOfBirth,
                Gender =x.Gender,
                Address =x.Address,
-              
+               MedicalReportId=x.MedicalReportId,
 
 
             }).ToList();  

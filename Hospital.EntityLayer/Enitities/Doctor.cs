@@ -20,6 +20,7 @@ namespace Hospital.EntityLayer.Enitities
 
         public ICollection<WorkingHour> WorkingHours { get; set; }
         public ICollection<Appointment> Appointments { get; set; }
+        public ICollection<MedicalReport> MedicalReports { get; set; }
     }
 }
  

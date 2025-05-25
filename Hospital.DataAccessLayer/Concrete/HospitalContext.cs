@@ -76,15 +76,16 @@ namespace Hospital.DataAccessLayer.Concrete
                 .HasForeignKey(pm => pm.MedicationId);
 
             modelBuilder.Entity<MedicalReport>()
-               .HasOne(r => r.Patient)
-               .WithMany() 
-               .HasForeignKey(r => r.PatientId)
-               .OnDelete(DeleteBehavior.Restrict);
+                 .HasOne(m => m.Patient)
+                 .WithMany(p => p.MedicalReports) 
+                 .HasForeignKey(m => m.PatientId)
+                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<MedicalReport>()
-               .HasOne(r => r.Doctor)
-               .WithMany() 
-               .HasForeignKey(r => r.DoctorId);
+                .HasOne(m => m.Doctor)
+                .WithMany(d => d.MedicalReports) 
+                .HasForeignKey(m => m.DoctorId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(HospitalContext).Assembly);
             base.OnModelCreating(modelBuilder);
