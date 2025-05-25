@@ -21,9 +21,9 @@ namespace Hospital.BusinessLayer.Concrete
             await _userRepository.AddAsync(user);
         }
 
-        public async Task DeleteAsync(User user)
+        public async Task DeleteAsync(Guid userId)
         {
-            await _userRepository.DeleteAsync(user);
+            await _userRepository.DeleteAsync(userId);
         }
 
         public async Task<List<User>> GetAllAsync()

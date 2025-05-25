@@ -38,5 +38,11 @@ namespace HospitalApi.Controllers
             var patient = await _patientService.UpdatePatientAsync(patientId, updatePatientDto);
             return Ok(patient);
         }
+        [HttpDelete("{patientId}")]
+        public async Task<IActionResult> DeleteAsync(Guid patientId)
+        {
+            await _patientService.DeleteAsync(patientId);
+            return Ok();
+        }
     }
 }

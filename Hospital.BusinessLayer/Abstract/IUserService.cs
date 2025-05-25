@@ -11,7 +11,7 @@ namespace Hospital.BusinessLayer.Abstract
     {
         Task AddAsync(User user);
         Task UpdateAsync(User user);
-        Task DeleteAsync(User user);
+        Task DeleteAsync(Guid userId);
         Task<User> GetByIdentityNumberAsync(string identityNumber);
         Task<List<User>> GetAllAsync();
         Task<User> GetByIdAsync(Guid id);

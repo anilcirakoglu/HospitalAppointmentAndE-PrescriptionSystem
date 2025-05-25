@@ -90,9 +90,11 @@ namespace Hospital.BusinessLayer.Concrete
 
             return updateDoctorDto;
         }
-        public async Task DeleteAsync(Doctor doctor)
+        public async Task DeleteAsync(Guid doctorId)
         {
-            await _doctorRepository.DeleteAsync(doctor);
+            await _doctorRepository.DeleteAsync(doctorId);
+            await _userRepository.DeleteAsync(doctorId);
+
         }
 
         public async Task<List<Doctor>> GetAllAsync()

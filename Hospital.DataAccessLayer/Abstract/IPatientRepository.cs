@@ -13,6 +13,6 @@ namespace Hospital.DataAccessLayer.Abstract
         Task<List<Patient>> GetAllAsync();
         Task AddAsync(Patient patient);
         Task UpdateAsync(Patient patient);
-        Task DeleteAsync(Patient patient);
+        Task DeleteAsync(Guid patientId);
     }
 }

@@ -12,7 +12,7 @@ namespace Hospital.BusinessLayer.Abstract
     {
         Task AddAsync(Doctor doctor);
         Task UpdateAsync(Doctor doctor);
-        Task DeleteAsync(Doctor doctor);
+        Task DeleteAsync(Guid doctorId);
         Task<List<Doctor>> GetAllAsync();
         Task<DoctorDto?> GetByIdAsync(Guid id);
 

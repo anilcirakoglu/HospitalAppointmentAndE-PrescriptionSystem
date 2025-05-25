@@ -24,8 +24,11 @@ namespace Hospital.DataAccessLayer.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Patient patient)
+        public async Task DeleteAsync(Guid patientId)
         {
+            var patient = await _context.Patients
+                .Include(y=>y.User)
+                .FirstOrDefaultAsync(x => x.UserId == patientId);
             _context.Patients.Remove(patient);
             await _context.SaveChangesAsync();
         }

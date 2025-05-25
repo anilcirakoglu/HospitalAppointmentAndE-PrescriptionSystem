@@ -13,7 +13,7 @@ namespace Hospital.BusinessLayer.Abstract
     {
         Task AddAsync(Patient patient);
         Task UpdateAsync(Patient patient);
-        Task DeleteAsync(Patient patient);
+        Task DeleteAsync(Guid id);
         Task<List<PatientDto>> GetAllAsync();
         Task<PatientDto> GetByIdAsync(Guid id);
         Task<CreatePatientDto> CreateAsync(CreatePatientDto createDoctorDto);
