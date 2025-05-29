@@ -60,10 +60,10 @@ namespace Hospital.BusinessLayer.Concrete
             return createPatientDto;
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid patientId)
         {
-           await _patientRepository.DeleteAsync(id);
-           await _userRepository.DeleteAsync(id);
+           await _patientRepository.DeleteAsync(patientId);
+           await _userRepository.DeleteAsync(patientId);
         }
 
         public async Task<List<PatientDto>> GetAllAsync()

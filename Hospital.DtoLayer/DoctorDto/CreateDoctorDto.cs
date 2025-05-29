@@ -15,7 +15,6 @@ namespace Hospital.DtoLayer.DoctorDto
         public string Specialty { get; set; }
         public string Description { get; set; }
         public string RoomNumber { get; set; }
-        public int RoleId { get; set; } 
         public string IdentityNumber { get; set; }
         public string Password { get; set; }
     }
