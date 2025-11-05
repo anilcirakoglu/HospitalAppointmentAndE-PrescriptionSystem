@@ -1,5 +1,6 @@
-using Hospital.DataAccessLayer.Concrete;
 using Hospital.BusinessLayer.Container;
+using Hospital.DataAccessLayer.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,8 @@ builder.Services.AddSwaggerGen();
 
 
 
-builder.Services.AddDbContext<HospitalContext>();
+builder.Services.AddDbContext<HospitalContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("HospitalDb")));
 builder.Services.ContainerDependencies();
 
 
@@ -28,6 +30,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

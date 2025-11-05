@@ -11,11 +11,10 @@ namespace Hospital.DataAccessLayer.Concrete
 {
     public class HospitalContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+     
+        public HospitalContext(DbContextOptions<HospitalContext> options) : base(options)
         {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-BPFOCPL;initial Catalog=HospitalDb;integrated Security=true;TrustServerCertificate=True;");
         }
-
 
 
         public DbSet<Appointment> Appointments { get; set; }
