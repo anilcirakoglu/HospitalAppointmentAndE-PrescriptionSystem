@@ -13,12 +13,16 @@ namespace Hospital.BusinessLayer.Concrete
     public class MedicalReportManager : IMedicalReportService
     {
         private readonly IMedicalReportRepository _medicalReportRepository;
-      
+        private readonly IDoctorRepository _doctorRepository;
+        private readonly IPatientRepository _patientRepository;
+        private readonly IUserRepository _userRepository;
+
 
         public MedicalReportManager(IMedicalReportRepository medicalReportRepository, IDoctorRepository doctorRepository, IUserRepository userRepository, IPatientRepository patientRepository)
         {
             _medicalReportRepository = medicalReportRepository;
-         
+            _patientRepository = patientRepository;
+            _userRepository = userRepository;
         }
 
         public async Task AddAsync(MedicalReport medicalReport)
@@ -28,10 +32,18 @@ namespace Hospital.BusinessLayer.Concrete
 
         public async Task<CreateMedicalReportDto> CreateMedicalReportAsync(CreateMedicalReportDto medicalReport)
         {
-            var report = new MedicalReport/*adding some entities*/
+            var userId = await _userRepository.GetByIdAsync(medicalReport.UserId);
+            var doctorId = await _userRepository.GetByIdAsync(medicalReport.DoctorId);
+            if (userId == null&&doctorId==null)
+            {
+                throw new Exception("Patient not found");
+            }
+
+            var report = new MedicalReport
                 {
                 Id = Guid.NewGuid(),
-                PatientId= Guid.NewGuid(),
+                UserId= medicalReport.UserId,
+                DoctorId= medicalReport.DoctorId,
                 ReportDate = DateTime.Now,
                 ReportDetails= medicalReport.ReportDetails,
                 ReportFilePath = medicalReport.ReportFilePath

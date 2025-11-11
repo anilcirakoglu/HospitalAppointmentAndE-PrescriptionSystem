@@ -9,7 +9,8 @@ namespace Hospital.DtoLayer.MedicalReportDto
     public class CreateMedicalReportDto
     {
         public Guid Id { get; set; }
-        public Guid PatientId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid DoctorId { get; set; }
 
         public DateTime ReportDate { get; set; }
         public string ReportDetails { get; set; }

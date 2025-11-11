@@ -17,5 +17,7 @@ namespace Hospital.EntityLayer.Enitities
         public string Dosage { get; set; } //Örn: "2x1"
         public int Quantity { get; set; } // Kaç tablet yazıldı
         public string UsageNote { get; set; } //(örnek: yemek sonrası)
+
+        public DateTime CreatedDate { get; set; }
     }
 }

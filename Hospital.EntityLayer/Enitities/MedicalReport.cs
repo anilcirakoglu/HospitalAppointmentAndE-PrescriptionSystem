@@ -10,7 +10,7 @@ namespace Hospital.EntityLayer.Enitities
     {
         public Guid Id { get; set; }
 
-        public Guid PatientId { get; set; }
+        public Guid UserId { get; set; }
         public Patient Patient { get; set; }
 
         public Guid DoctorId { get; set; }

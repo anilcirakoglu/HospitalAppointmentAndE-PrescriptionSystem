@@ -47,8 +47,7 @@ namespace Hospital.BusinessLayer.Concrete
 
             var patient = new Patient
             {
-                Id = Guid.NewGuid(),
-                MedicalReportId = Guid.NewGuid(),
+                Id = Guid.NewGuid(),               
                 UserId = user.Id,
                 DateOfBirth = DateTime.Now,
                 Gender = createPatientDto.Gender,
@@ -62,8 +61,13 @@ namespace Hospital.BusinessLayer.Concrete
 
         public async Task DeleteAsync(Guid patientId)
         {
-           await _patientRepository.DeleteAsync(patientId);
-           await _userRepository.DeleteAsync(patientId);
+            var patient = await _patientRepository.GetByIdAsync(patientId);
+            if (patient == null)
+            {
+                throw new Exception("Patient not found");
+            }
+            await _patientRepository.DeleteAsync(patientId);
+            await _userRepository.DeleteAsync(patientId);
         }
 
         public async Task<List<PatientDto>> GetAllAsync()
@@ -78,7 +82,7 @@ namespace Hospital.BusinessLayer.Concrete
                DateOfBirth =x.DateOfBirth,
                Gender =x.Gender,
                Address =x.Address,
-               MedicalReportId=x.MedicalReportId,
+             
 
 
             }).ToList();  

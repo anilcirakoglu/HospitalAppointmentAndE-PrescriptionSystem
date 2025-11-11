@@ -13,6 +13,6 @@ namespace Hospital.BusinessLayer.Abstract
         Task UpdateAsync(Appointment appointment);
         Task DeleteAsync(Appointment appointment);
         Task<List<Appointment>> GetAllAsync();
-        Task<Appointment> GetByIdAsync(int id);
+        Task<Appointment> GetByIdAsync(Guid id);
     }
 }
