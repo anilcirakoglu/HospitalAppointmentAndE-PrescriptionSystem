@@ -34,7 +34,7 @@ namespace Hospital.DataAccessLayer.Repositories
             return await _context.Appointments.ToListAsync();
         }
 
-        public async Task<Appointment> GetByIdAsync(int id)
+        public async Task<Appointment> GetByIdAsync(Guid id)
         {
             return await _context.Appointments.FindAsync(id);
         }

@@ -31,35 +31,41 @@ namespace Hospital.DataAccessLayer.Concrete
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
-            .HasIndex(u => u.IdentityNumber).IsUnique();
+               .HasIndex(u => u.IdentityNumber)
+               .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
 
             modelBuilder.Entity<Role>().HasData(
-             new Role { Id = 1, Name = "Admin" },
-             new Role { Id = 2, Name = "Doctor" },
-             new Role { Id = 3, Name = "Patient" } );
+                new Role { Id = 1, Name = "Admin" },
+                new Role { Id = 2, Name = "Doctor" },
+                new Role { Id = 3, Name = "Patient" });
 
             modelBuilder.Entity<Doctor>()
                 .HasOne(d => d.User)
-                 .WithOne()
-                 .HasForeignKey<Doctor>(d => d.UserId)
-                 .OnDelete(DeleteBehavior.Cascade);
+                .WithOne()
+                .HasForeignKey<Doctor>(d => d.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Patient>()
-               .HasOne(p => p.User)
-               .WithOne()
-               .HasForeignKey<Patient>(p => p.UserId)
-               .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(p => p.User)
+                .WithOne()
+                .HasForeignKey<Patient>(p => p.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Appointment>()
-                 .HasOne(a => a.Patient)
-                 .WithMany() 
-                 .HasForeignKey(a => a.PatientId)
-                 .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(a => a.Patient)
+                .WithMany(p => p.Appointments)
+                .HasForeignKey(a => a.PatientId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Appointment>()
                 .HasOne(a => a.Doctor)
                 .WithMany(d => d.Appointments)
-                .HasForeignKey(a => a.DoctorId);
+                .HasForeignKey(a => a.DoctorId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<PrescriptionMedication>()
                 .HasKey(pm => new { pm.PrescriptionId, pm.MedicationId });
@@ -67,7 +73,8 @@ namespace Hospital.DataAccessLayer.Concrete
             modelBuilder.Entity<PrescriptionMedication>()
                 .HasOne(pm => pm.Prescription)
                 .WithMany(p => p.PrescriptionMedications)
-                .HasForeignKey(pm => pm.PrescriptionId);
+                .HasForeignKey(pm => pm.PrescriptionId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<PrescriptionMedication>()
                 .HasOne(pm => pm.Medication)
@@ -75,16 +82,32 @@ namespace Hospital.DataAccessLayer.Concrete
                 .HasForeignKey(pm => pm.MedicationId);
 
             modelBuilder.Entity<MedicalReport>()
-                 .HasOne(m => m.Patient)
-                 .WithMany(p => p.MedicalReports) 
-                 .HasForeignKey(m => m.PatientId)
-                 .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(m => m.Patient)
+                .WithMany(p => p.MedicalReports)
+                .HasForeignKey(m => m.UserId)
+                .HasPrincipalKey(n => n.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<MedicalReport>()
                 .HasOne(m => m.Doctor)
-                .WithMany(d => d.MedicalReports) 
+                .WithMany(d => d.MedicalReports)
                 .HasForeignKey(m => m.DoctorId)
+                .HasPrincipalKey(n => n.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<WorkingHour>()
+                .HasOne(w => w.Doctor)
+                .WithMany(d => d.WorkingHours)
+                .HasForeignKey(w => w.DoctorId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.CreatedDate)
+                .HasDefaultValueSql("GETUTCDATE()");
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.IsActive)
+                .HasDefaultValue(true);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(HospitalContext).Assembly);
             base.OnModelCreating(modelBuilder);

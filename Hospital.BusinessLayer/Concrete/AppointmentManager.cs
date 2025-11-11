@@ -32,7 +32,7 @@ namespace Hospital.BusinessLayer.Concrete
             return await _appointmentRepository.GetAllAsync();
         }
 
-        public async Task<Appointment> GetByIdAsync(int id)
+        public async Task<Appointment> GetByIdAsync(Guid id)
         {
             return await _appointmentRepository.GetByIdAsync(id);
         }

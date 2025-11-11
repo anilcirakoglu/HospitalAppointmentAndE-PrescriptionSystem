@@ -92,6 +92,11 @@ namespace Hospital.BusinessLayer.Concrete
         }
         public async Task DeleteAsync(Guid doctorId)
         {
+            var doctor = await _doctorRepository.GetByIdAsync(doctorId);
+            if (doctor == null)
+            {
+                throw new Exception("Doctor not found");
+            }
             await _doctorRepository.DeleteAsync(doctorId);
             await _userRepository.DeleteAsync(doctorId);
 

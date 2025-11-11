@@ -4,6 +4,7 @@ using Hospital.DataAccessLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hospital.DataAccessLayer.Migrations
 {
     [DbContext(typeof(HospitalContext))]
-    partial class HospitalContextModelSnapshot : ModelSnapshot
+    [Migration("20251111171412_FixDb")]
+    partial class FixDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,6 +83,9 @@ namespace Hospital.DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("Doctors");
                 });
 
@@ -90,6 +96,9 @@ namespace Hospital.DataAccessLayer.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("DoctorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PatientId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ReportDate")
@@ -103,14 +112,11 @@ namespace Hospital.DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("PatientId");
 
                     b.ToTable("MedicalReports");
                 });
@@ -159,6 +165,9 @@ namespace Hospital.DataAccessLayer.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Patients");
                 });
@@ -361,14 +370,12 @@ namespace Hospital.DataAccessLayer.Migrations
                     b.HasOne("Hospital.EntityLayer.Enitities.Doctor", "Doctor")
                         .WithMany("MedicalReports")
                         .HasForeignKey("DoctorId")
-                        .HasPrincipalKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Hospital.EntityLayer.Enitities.Patient", "Patient")
                         .WithMany("MedicalReports")
-                        .HasForeignKey("UserId")
-                        .HasPrincipalKey("UserId")
+                        .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
