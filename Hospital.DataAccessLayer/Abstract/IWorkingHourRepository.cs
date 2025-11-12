@@ -9,10 +9,12 @@ namespace Hospital.DataAccessLayer.Abstract
 {
     public interface IWorkingHourRepository
     {
-        Task<WorkingHour> GetByIdAsync(int id);
+        Task<WorkingHour> GetByIdAsync(Guid id);
         Task<List<WorkingHour>> GetAllAsync();
+        Task<List<WorkingHour>> GetByDoctorIdAsync(Guid doctorId);
         Task AddAsync(WorkingHour workingHour);
         Task UpdateAsync(WorkingHour workingHour);
         Task DeleteAsync(WorkingHour workingHour);
+      
     }
 }

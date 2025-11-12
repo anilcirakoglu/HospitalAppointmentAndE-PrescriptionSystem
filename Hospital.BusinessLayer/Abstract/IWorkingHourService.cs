@@ -13,6 +13,7 @@ namespace Hospital.BusinessLayer.Abstract
         Task UpdateAsync(WorkingHour workingHour);
         Task DeleteAsync(WorkingHour workingHour);
         Task<List<WorkingHour>> GetAllAsync();
-        Task<WorkingHour> GetByIdAsync(int id);
+        Task<WorkingHour> GetByIdAsync(Guid id);
+        Task<List<WorkingHour>> GetByDoctorIdAsync(Guid doctorId);
     }
 }

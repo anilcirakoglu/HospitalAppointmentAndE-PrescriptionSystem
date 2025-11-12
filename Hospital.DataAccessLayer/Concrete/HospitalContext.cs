@@ -59,12 +59,14 @@ namespace Hospital.DataAccessLayer.Concrete
                 .HasOne(a => a.Patient)
                 .WithMany(p => p.Appointments)
                 .HasForeignKey(a => a.PatientId)
+                .HasPrincipalKey(n => n.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Appointment>()
                 .HasOne(a => a.Doctor)
                 .WithMany(d => d.Appointments)
                 .HasForeignKey(a => a.DoctorId)
+                .HasPrincipalKey(n => n.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<PrescriptionMedication>()
@@ -98,7 +100,8 @@ namespace Hospital.DataAccessLayer.Concrete
             modelBuilder.Entity<WorkingHour>()
                 .HasOne(w => w.Doctor)
                 .WithMany(d => d.WorkingHours)
-                .HasForeignKey(w => w.DoctorId)
+                .HasForeignKey(w => w.UserId)
+                .HasPrincipalKey(n => n.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()

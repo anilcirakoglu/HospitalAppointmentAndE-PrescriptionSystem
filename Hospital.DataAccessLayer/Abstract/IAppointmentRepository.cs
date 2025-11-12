@@ -15,5 +15,6 @@ namespace Hospital.DataAccessLayer.Abstract
         Task UpdateAsync(Appointment appointment);
         Task DeleteAsync(Appointment appointment);
        
+
     }
 }

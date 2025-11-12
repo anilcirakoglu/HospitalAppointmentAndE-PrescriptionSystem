@@ -32,12 +32,27 @@ namespace Hospital.DataAccessLayer.Repositories
 
         public async Task<List<WorkingHour>> GetAllAsync()
         {
-            return await _context.WorkingHours.ToListAsync();
+            return await _context.WorkingHours
+                .Include(w => w.Doctor)
+                .ThenInclude(d => d.User)
+                .ToListAsync();
         }
 
-        public async Task<WorkingHour> GetByIdAsync(int id)
+        public async Task<List<WorkingHour>> GetByDoctorIdAsync(Guid doctorId)
         {
-            return await _context.WorkingHours.FindAsync(id);
+            return await _context.WorkingHours
+                .Include(w => w.Doctor)
+                .ThenInclude(d => d.User)
+                .Where(w => w.UserId == doctorId)
+                .ToListAsync();
+        }
+
+        public async Task<WorkingHour> GetByIdAsync(Guid id)
+        {
+            return await _context.WorkingHours
+                .Include(w => w.Doctor)
+                .ThenInclude(d => d.User)
+                .FirstOrDefaultAsync(w => w.Id == id);
         }
 
         public async Task UpdateAsync(WorkingHour workingHour)
