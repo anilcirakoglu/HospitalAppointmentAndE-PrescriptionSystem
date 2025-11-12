@@ -25,23 +25,32 @@ namespace Hospital.DataAccessLayer.Repositories
 
         public async Task DeleteAsync(Appointment appointment)
         {
-           _context.Appointments.Remove(appointment);
+            _context.Appointments.Remove(appointment);
             await _context.SaveChangesAsync();
         }
 
         public async Task<List<Appointment>> GetAllAsync()
         {
-            return await _context.Appointments.ToListAsync();
+            return await _context.Appointments
+                .Include(a => a.Patient)
+                .ThenInclude(p => p.User)
+                .Include(a => a.Doctor)
+                .ThenInclude(d => d.User)
+                .ToListAsync();
         }
 
         public async Task<Appointment> GetByIdAsync(Guid id)
         {
-            return await _context.Appointments.FindAsync(id);
+            return await _context.Appointments
+                .Include(a => a.Patient)
+                .ThenInclude(p => p.User)
+                .Include(a => a.Doctor)
+                .ThenInclude(d => d.User)
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task UpdateAsync(Appointment appointment)
         {
-
             _context.Appointments.Update(appointment);
             await _context.SaveChangesAsync();
         }
